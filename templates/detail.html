@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load filter %}
+{% block sidebar %}
+    <div class="list-group">
+        <a href="/" class="list-group-item list-group-item-action">全ての記事</a>
+        {% for category in all_category %}
+            <a href="/?{{ category.id }}" class="list-group-item list-group-item-action">{{ category.name }}({{ category.count_post }})</a>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block content %}
+    <h1>{{ post.subject }}</h1>
+    {% for category in post.category.all %}
+        <span class="badge badge-secondary" onclick="location.href='/?category={{ category.id }}'">{{ category }}</span>
+    {% endfor %}
+    <p>作成日:{{ post.created }} 最終更新日:{{ post.modified }}</p>
+    <hr>
+    {{ post.contents| markdown_to_html }}
+    <div class="row">
+        <div class="col-sm-6" align="left">
+            {% if post.is_past_post %}
+                <button type="button" class="btn btn-default" onclick="location.href='/detail/{{ post.id| add:"-1" }}'">前の記事</button>
+            {% endif %}
+        </div>
+        <div class="col-sm-6" align="right">
+            {% if post.is_next_post %}
+                <button type="button" class="btn btn-default" onclick="location.href='/detail/{{ post.id| add:1 }}'" >次の記事</button>
+            {% endif %}
+        </div>
+        <div class="col-sm-12">
+            <hr>
+            {% for comment in comment_list %}
+                <div>
+                    <div>
+                        <strong>{{ comment.send_by }}</strong> <span class="text-muted">{{ comment.created }}</span>
+                    </div>
+                    <div>
+                        {{ comment.contents }}
+                    </div>
+                </div>
+            {% endfor %}
+            <div align="right">
+                <button type="button" class="btn btn-default" onclick="location.href='/form/{{ post.id }}'" >コメントする</button>
+            </div>
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+{% endblock %}

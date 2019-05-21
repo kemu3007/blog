@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block sidebar %}
+    <div class="list-group">
+        <a href="/" class="list-group-item list-group-item-action">全ての記事</a>
+        {% for category in all_category %}
+            <a href="/?category={{ category.id }}"
+               class="list-group-item list-group-item-action">{{ category.name }}({{ category.count_post }})</a>
+        {% endfor %}
+    </div>
+{% endblock %}
+{% block content %}
+    <table class="table table-bordered" width="100%">
+        <th>タイトル</th>
+        <th>カテゴリー</th>
+        <th>作成日</th>
+        <th>最終更新日</th>
+        {% for post in all_post %}
+            <tr>
+                <td><a href="/detail/{{ post.id }}">{{ post.subject }}</a></td>
+                <td>
+                    {% for category in post.category.all %}
+                        <span class="badge badge-secondary"
+                              onclick="location.href='/?category={{ category.id }}'">{{ category }}</span>
+                    {% endfor %}
+                </td>
+                <td>{{ post.created }}</td>
+                <td>{{ post.modified }}</td>
+            </tr>
+
+        {% endfor %}
+    </table>
+{% endblock %}

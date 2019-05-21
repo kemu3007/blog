@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load bootstrap4 %}
+{% bootstrap_css %}
+{% bootstrap_javascript jquery='slim' %}
+{% load static %}
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>けむの忘備録</title>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm bg-light">
+        <div class="container">
+            <a href="/"><font color="black">けむの忘備録</font></a>
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="/">記事一覧</a>
+            </div>
+        </div>
+        </div>
+    </nav>
+    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                {% block sidebar %}{% endblock %}
+            </div>
+            <div class="col-sm-9">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+    <footer class="bottom">
+        <hr>
+        <div class="container">
+            <p>created by k-murakawa</p>
+            <p>email: k-murakawa[@]hpa.bio</p>
+        </div>
+    </footer>
+</body>
+</html>

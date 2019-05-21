@@ -1,0 +1,67 @@
+import datetime
+
+from django.shortcuts import redirect, get_object_or_404
+from django.views.generic import DetailView, ListView, CreateView
+
+from post.forms import CommentCreateForm
+from post.models import Category, Post, Comment
+
+
+# Create your views here.
+
+
+class PostListView(ListView):
+    template_name = 'list.html'
+    model = Post
+    context_object_name = 'all_post'
+
+    def get_queryset(self):
+        category_pk = self.request.GET.get(key='category', default=None)
+        if category_pk:
+            results = Category.objects.get(
+                pk=category_pk).post_set.filter(active=True)
+        else:
+            results = Post.objects.filter(active=True)
+        return results
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['all_category'] = Category.objects.all()
+        return context
+
+
+class PostDetailView(DetailView):
+    template_name = 'detail.html'
+    model = Post
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category_list'] = self.object.category.all()
+        context['comment_list'] = Comment.get_comment(self.object.id)
+        context['all_category'] = Category.objects.all()
+        return context
+
+
+class CommentCreateView(CreateView):
+    model = Comment
+    form_class = CommentCreateForm
+    template_name = 'form.html'
+    success_url = '/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['all_category'] = Category.objects.all()
+        return context
+
+    def form_valid(self, form):
+        post = get_object_or_404(Post, pk=self.kwargs['pk'])
+        # 紐づく記事を設定する
+        comment = form.save(commit=False)
+        comment.post = post
+        comment.created = datetime.datetime.now()
+        comment.save()
+
+        response = redirect('/detail/')
+        response['location'] += self.kwargs['pk']
+        # 記事詳細にリダイレクト
+        return response
