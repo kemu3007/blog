@@ -20,13 +20,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'g8u+hjv&^*40rf-nkfy#svu1=(@=wj=%s(e=f%76=ni7=uoh!p'
+SECRET_KEY = 'g8u+hjv&^*40rf-nkfy#svu1=(@=wj=%s(e=f%76=ni7=uoh!p' 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True 
 
-ALLOWED_HOSTS = []
-
+#ALLOWED_HOSTS = ["133.167.108.150"]
+ALLOWED_HOSTS =[]
 
 # Application definition
 
@@ -109,9 +109,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ja'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 
@@ -130,3 +130,4 @@ MARKDOWNX_MARKDOWN_EXTENSIONS = [
     'markdown.extensions.extra',  # Fenced Code Blocksは、これに含まれている
     'markdown.extensions.toc',
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, "static")

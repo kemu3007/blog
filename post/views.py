@@ -2,6 +2,7 @@ import datetime
 
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import DetailView, ListView, CreateView
+from django.contrib import messages
 
 from post.forms import CommentCreateForm
 from post.models import Category, Post, Comment
@@ -54,14 +55,23 @@ class CommentCreateView(CreateView):
         return context
 
     def form_valid(self, form):
-        post = get_object_or_404(Post, pk=self.kwargs['pk'])
+        post_id = self.request.GET.get('post', None)
+        origin_id = self.request.GET.get('origin', None)
+        if not post_id:
+            response = redirect('/')
+            messages.error(self.request, 'コメントする記事が見つかりませんでした。')
+            return response
+        post = Post.objects.get(pk=post_id)
+        if origin_id:
+            origin = Comment.objects.get(pk=origin_id)
         # 紐づく記事を設定する
         comment = form.save(commit=False)
         comment.post = post
+        comment.origin = origin
         comment.created = datetime.datetime.now()
         comment.save()
 
         response = redirect('/detail/')
-        response['location'] += self.kwargs['pk']
+        response['location'] += post_id
         # 記事詳細にリダイレクト
         return response

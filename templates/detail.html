@@ -36,11 +36,23 @@
                     </div>
                     <div>
                         {{ comment.contents }}
+                            <div class="row">
+                                {% for reply in comment.get_reply %}
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-11" style="background-color: #efefef">
+                                        <strong>{{ reply.send_by }}</strong> <span class="text-muted">{{ reply.created }}</span>
+                                        <p>{{ reply.contents }}</p>
+                                    </div>
+                                {% endfor %}
+                                <div class="col-sm-12" align="right">
+                                    <a href="/form/?post={{ post.id }}&origin={{ comment.id }}">返信する</a>
+                                </div>
+                             </div>
                     </div>
                 </div>
             {% endfor %}
             <div align="right">
-                <button type="button" class="btn btn-default" onclick="location.href='/form/{{ post.id }}'" >コメントする</button>
+                <button type="button" class="btn btn-default" onclick="location.href='/form/?post={{ post.id }}'" >コメントする</button>
             </div>
         </div>
     </div>

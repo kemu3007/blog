@@ -40,12 +40,16 @@ class Comment(models.Model):
     send_by = models.CharField('名前', max_length=20)
     created = models.DateTimeField()
 
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='belong_post')
     contents = models.TextField()
+    origin = models.ForeignKey('self', on_delete=models.SET_NULL, related_name='belong_comment', null=True, blank=True)
 
     def __str__(self):
-        return self.id
+        return '{}-{}({})'.format(self.id, self.send_by, self.post)
 
     @staticmethod
     def get_comment(post_pk):
         return Comment.objects.filter(post=post_pk)
+
+    def get_reply(self):
+        return Comment.objects.filter(origin=self.id)

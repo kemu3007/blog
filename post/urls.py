@@ -6,7 +6,7 @@ from post.views import PostDetailView, PostListView, CommentCreateView
 
 urlpatterns = [
     path(r'', PostListView.as_view()),
-    path(r'form/<pk>', CommentCreateView.as_view()),
+    path(r'form/', CommentCreateView.as_view()),
     path(r'detail/<pk>', PostDetailView.as_view()),
 ]
 
