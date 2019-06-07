@@ -26,7 +26,7 @@ class PostListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['all_category'] = Category.objects.all()
+        context['all_category'] = Category.objects.all().order_by('ordering')
         return context
 
 
@@ -38,7 +38,7 @@ class PostDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['category_list'] = self.object.category.all()
         context['comment_list'] = Comment.get_comment(post_pk=self.object.id).filter(origin=None)
-        context['all_category'] = Category.objects.all()
+        context['all_category'] = Category.objects.all().order_by('ordering')
         return context
 
 
@@ -50,7 +50,7 @@ class CommentCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['all_category'] = Category.objects.all()
+        context['all_category'] = Category.objects.all().order_by('ordering')
         return context
 
     def form_valid(self, form):
