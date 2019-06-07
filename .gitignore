@@ -99,3 +99,4 @@ ENV/
 .venv/
 .static/admin/
 .idea/
+db.sqlite3
