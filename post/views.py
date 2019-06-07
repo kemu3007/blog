@@ -1,5 +1,4 @@
-import datetime
-
+from django.utils import timezone
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import DetailView, ListView, CreateView
 from django.contrib import messages
@@ -38,7 +37,7 @@ class PostDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['category_list'] = self.object.category.all()
-        context['comment_list'] = Comment.get_comment(self.object.id)
+        context['comment_list'] = Comment.get_comment(post_pk=self.object.id).filter(origin=None)
         context['all_category'] = Category.objects.all()
         return context
 
@@ -67,8 +66,9 @@ class CommentCreateView(CreateView):
         # 紐づく記事を設定する
         comment = form.save(commit=False)
         comment.post = post
-        comment.origin = origin
-        comment.created = datetime.datetime.now()
+        if origin_id:
+            comment.origin = origin
+        comment.created = timezone.localtime()
         comment.save()
 
         response = redirect('/detail/')
