@@ -1,13 +1,4 @@
 {% extends 'base.html' %}
-{% block sidebar %}
-    <div class="list-group">
-        <a href="/" class="list-group-item list-group-item-action">全ての記事</a>
-        {% for category in all_category %}
-            <a href="/?{{ category.id }}"
-               class="list-group-item list-group-item-action">{{ category.name }}({{ category.count_post }})</a>
-        {% endfor %}
-    </div>
-{% endblock %}
 {% block content %}
     <form method="post">{% csrf_token %}
         <div class="form-group">
