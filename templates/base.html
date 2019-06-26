@@ -10,7 +10,7 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-sm bg-light">
-        <div class="container">
+        <div class="container-fluid">
             <a href="/"><font color="black">けむの忘備録</font></a>
             <div class="navbar-nav">
                 <a class="nav-item nav-link" href="/">記事一覧</a>
@@ -19,7 +19,7 @@
         </div>
     </nav>
     <hr>
-    <div class="container">
+    <div class="container-fluid">
         {% if messages %}
             {% for message in messages %}
             <div class="alert alert-danger" role="alert">
@@ -38,23 +38,26 @@
                 </div>
             </div>
             <div class="col-sm-9">
-                {% block content %}{% endblock %}
-            </div>
-        </div>
-    </div>
-    <footer class="bottom">
-        <hr>
-        <div class="container">
-            <p>created by k-murakawa</p>
-            <p>email: k-murakawa[@]hpa.bio</p>
-            <div class="row">
-                <div class="col-sm-12" align="right">
-                    {% if request.user.is_authenticated %}
-                        <a href="/admin">管理サイトへ</a>(現在の権限：管理者)
-                    {% endif %}
+                <div class="container-fluid">
+                    {% block content %}{% endblock %}
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
 </body>
+<footer class="bottom" style="background-color: white">
+    <hr>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-6">
+                <p>email: k-murakawa[@]hpa.bio</p>
+            </div>
+            <div class="col-sm-6" align="right">
+                {% if request.user.is_authenticated %}
+                    <a href="/admin">管理サイトへ</a>(現在の権限：管理者)
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</footer>
 </html>
