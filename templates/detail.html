@@ -1,21 +1,17 @@
 {% extends 'base.html' %}
 {% load filter %}
-{% block sidebar %}
-    <div class="list-group">
-        <a href="/" class="list-group-item list-group-item-action">全ての記事</a>
-        {% for category in all_category %}
-            <a href="/?{{ category.id }}" class="list-group-item list-group-item-action">{{ category.name }}({{ category.count_post }})</a>
-        {% endfor %}
-    </div>
-{% endblock %}
 {% block content %}
     <h1>{{ post.subject }}</h1>
     {% for category in post.category.all %}
         <span class="badge badge-secondary" onclick="location.href='/?category={{ category.id }}'">{{ category }}</span>
     {% endfor %}
-    <p>作成日:{{ post.created }} 最終更新日:{{ post.modified }}</p>
+    <p>created:{{ post.created }} updated:{{ post.modified }}</p>
+    <div class="alert alert-danger">
+        この記事は最終更新日より{{ days }}日経過しています。
+    </div>
     <hr>
     {{ post.contents| markdown_to_html }}
+    <hr>
     <div class="row">
         <div class="col-sm-6" align="left">
             {% if post.is_past_post %}
@@ -27,35 +23,29 @@
                 <button type="button" class="btn btn-default" onclick="location.href='/detail/{{ post.id| add:1 }}'" >次の記事</button>
             {% endif %}
         </div>
-        <div class="col-sm-12">
-            <hr>
-            {% for comment in comment_list %}
-                <div>
-                    <div>
-                        <strong>{{ comment.send_by }}</strong> <span class="text-muted">{{ comment.created }}</span>
-                    </div>
-                    <div>
-                        {{ comment.contents }}
-                            <div class="row">
-                                {% for reply in comment.get_reply %}
-                                    <div class="col-sm-1"></div>
-                                    <div class="col-sm-11" style="background-color: #efefef">
-                                        <strong>{{ reply.send_by }}</strong> <span class="text-muted">{{ reply.created }}</span>
-                                        <p>{{ reply.contents }}</p>
-                                    </div>
-                                {% endfor %}
-                                <div class="col-sm-12" align="right">
-                                    <a href="/form/?post={{ post.id }}&origin={{ comment.id }}">返信する</a>
-                                </div>
-                             </div>
-                    </div>
+    </div>
+    <hr>
+    <h5>コメント一覧</h5>
+    <div class="row">
+        {% for comment in comment_list %}
+            <div class="col-sm-12 alert alert-primary" style="margin-bottom: 0.1rem">
+                <strong>{{ comment.send_by }}</strong> <span class="text-muted">{{ comment.created }}</span><br>
+                {{ comment.contents }}
+            </div>
+            {% for reply in comment.get_reply %}
+                <div class="col-sm-1"></div>
+                <div class="col-sm-11 alert alert-success" style="margin-bottom: 0.1rem">
+                    <strong>{{ reply.send_by }}</strong> <span class="text-muted">{{ reply.created }}</span><br>
+                    {{ reply.contents }}
                 </div>
             {% endfor %}
-            <div align="right">
-                <button type="button" class="btn btn-default" onclick="location.href='/form/?post={{ post.id }}'" >コメントする</button>
+            <div class="col-sm-12" align="right">
+                <button type="button" class="btn btn-success" style="margin-bottom: 0.2rem" onclick="location.href='/form/?post={{ post.id }}&origin={{ comment.id }}'">返信する</button>
             </div>
-        </div>
+        {% endfor %}
     </div>
+    <hr>
+    <button type="button" class="btn btn-primary" onclick="location.href='/form/?post={{ post.id }}'" >コメントする</button>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
