@@ -6,6 +6,9 @@
         <span class="badge badge-secondary" onclick="location.href='/?category={{ category.id }}'">{{ category }}</span>
     {% endfor %}
     <p>作成日:{{ post.created }} 最終更新日:{{ post.modified }}</p>
+    <div class="alert alert-danger">
+        この記事は最終更新日より{{ days }}日経過しています。
+    </div>
     <hr>
     {{ post.contents| markdown_to_html }}
     <div class="row">
