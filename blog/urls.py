@@ -16,8 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from post.views import get_error
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('post.urls')),
     path('markdownx/', include('markdownx.urls')),
 ]
+handler404 = get_error
+handler500 = get_error

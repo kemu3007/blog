@@ -1,6 +1,6 @@
 from django.utils import timezone
-from django.shortcuts import redirect, get_object_or_404
-from django.views.generic import DetailView, ListView, CreateView
+from django.shortcuts import redirect
+from django.views.generic import DetailView, ListView, CreateView, TemplateView
 from django.contrib import messages
 
 from post.forms import CommentCreateForm
@@ -8,6 +8,9 @@ from post.models import Category, Post, Comment
 
 
 # Create your views here.
+def get_error(request):
+    messages.error(request, '"https://kemu.site{}"は不正なurlです。'.format(request.get_full_path()))
+    return redirect('/')
 
 
 class PostListView(ListView):
@@ -18,8 +21,11 @@ class PostListView(ListView):
     def get_queryset(self):
         category_pk = self.request.GET.get(key='category', default=None)
         if category_pk:
-            results = Category.objects.get(
-                pk=category_pk).post_set.filter(active=True)
+            if Category.objects.filter(pk=category_pk).exists():
+                results = Category.objects.get(
+                    pk=category_pk).post_set.filter(active=True)
+            else:
+                raise 404
         else:
             results = Post.objects.filter(active=True)
         return results
@@ -33,6 +39,13 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     template_name = 'detail.html'
     model = Post
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if not self.object:
+            raise 404
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
