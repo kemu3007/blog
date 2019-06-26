@@ -9,7 +9,6 @@ urlpatterns = [
     path(r'form/', CommentCreateView.as_view()),
     path(r'detail/<pk>', PostDetailView.as_view()),
 ]
-
 # 開発環境でのメディアファイルの配信設定
 urlpatterns += static(
     settings.MEDIA_URL,
