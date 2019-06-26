@@ -52,6 +52,7 @@ class PostDetailView(DetailView):
         context['category_list'] = self.object.category.all()
         context['comment_list'] = Comment.get_comment(post_pk=self.object.id).filter(origin=None)
         context['all_category'] = Category.objects.all().order_by('ordering')
+        context['days'] = (timezone.localdate() - self.object.modified).days
         return context
 
 
