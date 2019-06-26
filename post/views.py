@@ -23,11 +23,11 @@ class PostListView(ListView):
         if category_pk:
             if Category.objects.filter(pk=category_pk).exists():
                 results = Category.objects.get(
-                    pk=category_pk).post_set.filter(active=True)
+                    pk=category_pk).post_set.filter(active=True).order_by('-id')
             else:
                 raise 404
         else:
-            results = Post.objects.filter(active=True)
+            results = Post.objects.filter(active=True).order_by('-id')
         return results
 
     def get_context_data(self, **kwargs):
