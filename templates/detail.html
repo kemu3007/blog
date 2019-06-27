@@ -28,10 +28,10 @@
     <h5>コメント一覧</h5>
     <div class="row">
         {% for comment in comment_list %}
-            <div class="col-sm-12 alert alert-primary" style="margin-bottom: 0.1rem">
+            <div class="col-sm-11 alert alert-primary" style="margin-bottom: 0.1rem">
                 <strong>{{ comment.send_by }}</strong> <span class="text-muted">{{ comment.created }}</span><br>
                 {{ comment.contents }}
-            </div>
+            </div><div class="col-sm-1"></div>
             {% for reply in comment.get_reply %}
                 <div class="col-sm-1"></div>
                 <div class="col-sm-11 alert alert-success" style="margin-bottom: 0.1rem">
@@ -40,12 +40,49 @@
                 </div>
             {% endfor %}
             <div class="col-sm-12" align="right">
-                <button type="button" class="btn btn-success" style="margin-bottom: 0.2rem" onclick="location.href='/form/?post={{ post.id }}&origin={{ comment.id }}'">返信する</button>
+                <a class="btn btn-success" data-toggle="modal" data-target="#{{comment.pk}}" style="margin-bottom: 0.2rem">返信する</a>
+            </div>
+            <div class="modal fade" id="{{comment.pk}}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <form method="post">{% csrf_token %}
+                            <div class="modal-header">
+                                <h4>返信入力画面<{{ comment.id }}></h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <input type="hidden" name="type" value="reply">
+                                    <input type="hidden" name="origin" value={{ comment.id }}>
+                                    <label class="control-label">送信者名(表示されます)</label>
+                                    {{ form.send_by }}
+                                    <label class="control-label">コメント文</label>
+                                    {{ form.contents }}
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">返信する</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">閉じる</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         {% endfor %}
     </div>
     <hr>
-    <button type="button" class="btn btn-primary" onclick="location.href='/form/?post={{ post.id }}'" >コメントする</button>
+    <form method="post">{% csrf_token %}
+        <div class="form-group">
+            <input type="hidden" name="type" value="comment">
+            <label class="control-label">送信者名(表示されます)</label>
+            {{ form.send_by }}
+            <label class="control-label">コメント文</label>
+            {{ form.contents }}
+        </div>
+        <div align="right">
+            <button class="btn btn-primary" type="submit">コメントする</button>
+        </div>
+    </form>
+    <hr>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/dracula.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
