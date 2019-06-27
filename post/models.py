@@ -18,7 +18,7 @@ class Category(models.Model):
 
 class Post(models.Model):
     subject = models.CharField(max_length=30)
-    contents = MarkdownxField('本文', help_text='Markdown形式で書いてください。')
+    text = MarkdownxField('本文', help_text='Markdown形式で書いてください。')
 
     active = models.BooleanField()
 
