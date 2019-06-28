@@ -1,6 +1,7 @@
 from django.utils import timezone
 from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView, CreateView, TemplateView
+from django.views.generic.edit import ModelFormMixin
 from django.contrib import messages
 
 from post.forms import CommentCreateForm
@@ -36,9 +37,10 @@ class PostListView(ListView):
         return context
 
 
-class PostDetailView(DetailView):
+class PostDetailView(ModelFormMixin,DetailView):
     template_name = 'detail.html'
     model = Post
+    form_class = CommentCreateForm
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -55,37 +57,31 @@ class PostDetailView(DetailView):
         context['days'] = (timezone.localdate() - self.object.modified).days
         return context
 
-
-class CommentCreateView(CreateView):
-    model = Comment
-    form_class = CommentCreateForm
-    template_name = 'form.html'
-    success_url = '/'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['all_category'] = Category.objects.all().order_by('ordering')
-        return context
-
     def form_valid(self, form):
-        post_id = self.request.GET.get('post', None)
-        origin_id = self.request.GET.get('origin', None)
-        if not post_id:
-            response = redirect('/')
-            messages.error(self.request, 'コメントする記事が見つかりませんでした。')
-            return response
-        post = Post.objects.get(pk=post_id)
-        if origin_id:
-            origin = Comment.objects.get(pk=origin_id)
-        # 紐づく記事を設定する
-        comment = form.save(commit=False)
-        comment.post = post
-        if origin_id:
-            comment.origin = origin
-        comment.created = timezone.localtime()
-        comment.save()
+        if self.request.POST.get(key='type', default=None) == 'comment':
+            post_pk = self.kwargs['pk']
+            comment = form.save(commit=False)
+            comment.post = Post.objects.get(pk=post_pk)
+            comment.created = timezone.localtime()
+            comment.save()
+        elif self.request.POST.get(key='type', default=None) == 'reply':
+            post_pk = self.kwargs['pk']
+            origin = self.request.POST.get(key='origin', default=None)
+            if origin:
+                comment = form.save(commit=False)
+                comment.post = Post.objects.get(pk=post_pk)
+                comment.origin = Comment.objects.get(pk=origin)
+                comment.created = timezone.localtime()
+                comment.save()
+            else:
+                raise 404
+        messages.success(self.request, 'メッセージを投稿しました。')
+        return redirect(self.request.path)
 
-        response = redirect('/detail/')
-        response['location'] += post_id
-        # 記事詳細にリダイレクト
-        return response
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            self.object = self.get_object()
+            return self.form_invalid(form)
