@@ -16,9 +16,9 @@ jobs:
         git config --local user.name "GitHubAction"
         pip install -r requirements.txt
         rm requirements.lock
-        git add requirements.lock
-        git commit -m "remove requirements.txt"
+        git add .
+        git commit -m "remove requirements.lock"
         make genlock
-        git add requirements.txt
-        git commit -m "create requirements.txt"
+        git add .
+        git commit -m "create requirements.lock"
         git push origin master -f
