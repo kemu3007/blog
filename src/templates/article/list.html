@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% for article in object_list %}
+  <a class="card mt-2" href="{% url 'article_detail' article.pk %}">
+    <div class="card-body text-secondary">
+      <div class="card-title d-flex justify-content-between">
+        <div>
+          {{ article.title }}
+        </div>
+        <div class="text--black">
+          {{ article.created_at | date }}
+        </div>
+      </div>
+    </div>
+  </a>
+  {% endfor %}
+{% endblock %}

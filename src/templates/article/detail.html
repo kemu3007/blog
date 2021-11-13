@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>
+  {{ article.title }}
+</h2>
+<div class="d-flex justify-content-between">
+  <p>
+    作成日: {{ article.created_at | date }}
+  </p>
+  <p>
+    最終更新日: {{ article.updated_at | date }}
+  </p>
+</div>
+  {{ markdown_contents | safe }}
+{% endblock %}

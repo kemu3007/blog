@@ -1,0 +1,22 @@
+from typing import Any, Dict
+
+import markdown
+from django.views.generic import DetailView, ListView
+
+from article.models import Article
+
+
+class ArticleListView(ListView):
+    queryset = Article.objects.filter(is_active=True)
+    template_name = "article/list.html"
+    ordering = "-id"
+
+
+class ArticleDetailView(DetailView):
+    queryset = Article.objects.filter(is_active=True)
+    template_name = "article/detail.html"
+
+    def get_context_data(self, **kwargs) -> Dict[str, Any]:
+        context_data = super().get_context_data(**kwargs)
+        context_data["markdown_contents"] = markdown.markdown(self.object.contents)
+        return context_data
