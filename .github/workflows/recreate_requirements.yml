@@ -19,6 +19,6 @@ jobs:
         git add requirements.lock
         git commit -m "remove requirements.txt"
         make genlock
-        git add requirement.txt
+        git add requirements.txt
         git commit -m "create requirements.txt"
         git push origin master -f
