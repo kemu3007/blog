@@ -1,4 +1,4 @@
-name: update requirement.txt
+name: recreate requirement.lock
 
 on:
   workflow_dispatch:
@@ -14,8 +14,11 @@ jobs:
       run: |
         git config --local user.email "GitHubAction@kemu.site"
         git config --local user.name "GitHubAction"
-        pip install requirement.txt
+        pip install -r requirements.txt
+        rm requirements.lock
+        git add requirements.lock
+        git commit -m "remove requirements.txt"
         make genlock
         git add requirement.txt
-        git commit -m "update requirements.txt"
+        git commit -m "create requirements.txt"
         git push origin master -f

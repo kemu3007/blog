@@ -1,5 +1,5 @@
 genlock:
-	pip freeze > requirements.txt
+	pip freeze > requirements.lock
 fmt:
 	black src/ && isort src/
 lint:
