@@ -3,6 +3,7 @@ from typing import Any, Dict
 import markdown
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import DetailView, ListView
+from mdx_gfm import GithubFlavoredMarkdownExtension
 
 from article.models import Article
 from shared.utils import is_uuid
@@ -28,5 +29,7 @@ class ArticleDetailView(DetailView):
 
     def get_context_data(self, **kwargs) -> Dict[str, Any]:
         context_data = super().get_context_data(**kwargs)
-        context_data["markdown_contents"] = markdown.markdown(self.object.contents)
+        context_data["markdown_contents"] = markdown.markdown(
+            self.object.contents, extensions=[GithubFlavoredMarkdownExtension()]
+        )
         return context_data
