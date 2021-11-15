@@ -1,3 +1,5 @@
 Django
 markdown
 uwsgi
+graphene_django
+django-colorfield
