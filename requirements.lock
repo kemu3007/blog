@@ -1,3 +1,4 @@
+aniso8601==7.0.0
 argcomplete==1.12.3
 asgiref==3.4.1
 attrs==19.3.0
@@ -18,7 +19,12 @@ dbus-python==1.2.16
 distro==1.4.0
 distro-info===0.23ubuntu1
 Django==3.2.9
+django-colorfield==0.4.5
 entrypoints==0.3
+graphene==2.1.9
+graphene-django==2.15.0
+graphql-core==2.3.2
+graphql-relay==2.0.1
 httplib2==0.14.0
 hyperlink==19.0.0
 idna==2.8
@@ -41,6 +47,7 @@ oauthlib==3.1.0
 packaging==21.2
 pexpect==4.6.0
 pipx==0.16.4
+promise==2.3
 protobuf==3.6.1
 pyasn1==0.4.2
 pyasn1-modules==0.2.1
@@ -61,14 +68,17 @@ pytz==2021.3
 PyYAML==5.3.1
 requests==2.22.0
 requests-unixsocket==0.2.0
+Rx==1.6.1
 SecretStorage==2.3.1
 service-identity==18.1.0
 simplejson==3.16.0
+singledispatch==3.7.0
 six==1.14.0
 sos==4.1
 sqlparse==0.4.2
 ssh-import-id==5.10
 systemd-python==234
+text-unidecode==1.3
 Twisted==18.9.0
 ubuntu-advantage-tools==27.3
 ufw==0.36
