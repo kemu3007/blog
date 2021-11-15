@@ -3,3 +3,6 @@ markdown
 uwsgi
 graphene_django
 django-colorfield
+gh_md_to_html
+pygments
+py-gfm

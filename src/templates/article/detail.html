@@ -12,5 +12,7 @@
     最終更新日: {{ article.updated_at | date }}
   </p>
 </div>
+<div class="markdown-body">
   {{ markdown_contents | safe }}
+</div>
 {% endblock %}
