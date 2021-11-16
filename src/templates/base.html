@@ -1,5 +1,5 @@
 {% load static %}
-<html lang="ja" style="overflow-y: hidden;">
+<html lang="ja">
   <head>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,7 +9,7 @@
       <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6219032039771696"crossorigin="anonymous"></script>
       <script data-ad-client="ca-pub-6219032039771696" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   </head>
-  <body style="height: 100vh; height: -webkit-fill-available;">
+  <body>
     <nav class="navbar navbar-light bg-light navbar-expand-md">
       <div class="container">
         <a class="navbar-brand" href="/">kemuのブログ</a>
@@ -30,13 +30,11 @@
         </div>
       </div>
     </nav>
-    <div style="height: calc(100% - 56px - 56px); overflow-y: scroll;">
-      <div class="container mt-4" >
-        {% block content %}
-        {% endblock %}
-      </div>
+    <div class="container mt-4" >
+      {% block content %}
+      {% endblock %}
     </div>
-    <footer class="bg-light text-center text-lg-start fixed-bottom" style="height: 56px;">
+    <footer class="bg-light text-center text-lg-start">
       <div class="text-center p-3">
         © 2021 Copyright:
         <a class="text-dark">kemu</a>
