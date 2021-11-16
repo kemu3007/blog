@@ -5,8 +5,9 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import DetailView, ListView
 from mdx_gfm import GithubFlavoredMarkdownExtension
 
-from article.models import Article
 from shared.utils import is_uuid
+
+from .models import Article
 
 
 class ArticleListView(ListView):

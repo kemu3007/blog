@@ -15,4 +15,79 @@
 <div class="markdown-body">
   {{ markdown_contents | safe }}
 </div>
+<div class="mt-4">
+  <h3>Comments</h2>
+  {% for comment in article.ref_comments.all %}
+  <div class="card">
+    <div class="card-body text-secondary">
+      <div class="d-flex justify-content-between">
+        {% if comment.is_master %}
+          <p class="text-danger">kemu</p>
+        {% else %}
+          <p>{{ comment.name }}({{ comment.ip_address }})</p>
+        {% endif%}
+        <p>{{ comment.created_at }}</p>
+      </div>
+      {{ comment.contents }}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+<hr />
+<div class="card">
+  <div class="card-body text-secondary">
+    <label for="commentName" class="form-label">表示名</label>
+    <input class="form-control" id="commentName" required>
+    <label for="commentContents" class="form-label">内容</label>
+    <textarea class="form-control" id="commentContents" rows="3" required></textarea>
+    <div class="form-check">
+      <input class="form-check-input" type="checkbox" id="commentCheck">
+      <label class="form-check-label" for="commentCheck">
+        送信した内容、送信元IPアドレスが公開されることを理解しています。
+      </label>
+    <div class="d-flex justify-content-center mt-2">
+      <button class="btn btn-primary" onclick="addComment()">コメントする</button>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+addCommentQuery = `mutation($name: String!, $contents: String!) {
+  addComment(input: {
+    article: {{ article.id }},
+    name: $name,
+    contents: $contents,
+  }) {
+    comment {
+      id
+    }
+  }
+}`
+
+function addComment() {
+  if (!document.getElementById("commentCheck").checked) {
+    alert("同意項目がチェックされていません")
+    return
+  }
+  const comment = {
+    name: document.getElementById("commentName").value,
+    contents: document.getElementById("commentContents").value
+  }
+  if (!comment.name || !comment.contents) {
+    alert("表示名/内容を入力してください")
+    return
+  }
+  fetch('/api/v1/graphql/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'X-CSRFToken': Cookies.get('csrftoken'),
+    },
+    body: JSON.stringify({
+      query: addCommentQuery,
+      variables: comment,
+    })
+  })
+}
+</script>
 {% endblock %}

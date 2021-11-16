@@ -9,5 +9,5 @@ urlpatterns = [
     path("admin/native/", admin.site.urls),
     path("", article_views.ArticleListView.as_view(), name="article_list"),
     path("<str:uuid>", article_views.ArticleDetailView.as_view(), name="article_detail"),
-    path("api/v1/graphql/", login_required(GraphQLView.as_view(graphiql=True))),
+    path("api/v1/graphql/", GraphQLView.as_view(graphiql=True)),
 ]

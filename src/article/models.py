@@ -23,3 +23,15 @@ class Article(BaseModel):
 
     def __str__(self) -> str:
         return self.title
+
+
+class Comment(BaseModel):
+    article = models.ForeignKey("article.Article", on_delete=models.CASCADE, related_name="ref_comments")
+    ip_address = models.GenericIPAddressField("IPアドレス")
+    name = models.CharField("名前", max_length=32)
+    contents = models.CharField("内容", max_length=255)
+    is_active = models.BooleanField("有効フラグ", default=True)
+    is_master = models.BooleanField("管理者からのコメント", default=False)
+
+    def __str__(self) -> str:
+        return self.contents
