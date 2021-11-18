@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+  <a class="btn btn-sm btn-secondary" href="{% url 'article_list' %}">ALL</a>
+  {% for tag in Tags %}
+    <a class="btn btn-sm text-white" style="background-color: {{ tag.color }};" href="{% url 'article_list' %}?tag={{tag.id}}">{{ tag.name }}</a>
+  {% endfor %}
   {% for article in object_list %}
-  <a class="card mt-2" href="{% url 'article_detail' article.uuid %}" style="text-decoration: none;">
+  <a class="card mt-2 no-deco" href="{% url 'article_detail' article.uuid %}">
     <div class="card-body text-secondary">
       <div class="card-title d-flex justify-content-between">
         <div>
@@ -25,4 +29,21 @@
     </div>
   </a>
   {% endfor %}
+  <div class="d-flex justify-content-center mt-2">
+    <a class="bi bi-chevron-left page-navi {% if not page_obj.has_previous %}event-disabled{% endif %}" href="?page={{ page_obj.number | add:-1 }}"></a>
+    {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
+    <a class="bi bi-chevron-right page-navi {% if not page_obj.has_next %}event-disabled{% endif %}" href="?page={{ page_obj.number | add:1 }}"></a>
+  </div>
+  <style>
+    .no-deco {
+      text-decoration: none;
+    }
+    .page-navi {
+      font-size: 24px
+    }
+    .event-disabled {
+      pointer-events: none;
+      color: grey;
+    }
+  </style>
 {% endblock %}

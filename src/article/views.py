@@ -8,7 +8,7 @@ from mdx_gfm import GithubFlavoredMarkdownExtension
 
 from shared.utils import is_uuid
 
-from .models import Article, Comment
+from .models import Article, Comment, Tag
 
 
 class ArticleListView(ListView):
@@ -17,6 +17,18 @@ class ArticleListView(ListView):
     )
     template_name = "article/list.html"
     ordering = "-id"
+    paginate_by = 10
+
+    def get_queryset(self):
+        tag = self.request.GET.get("tag")
+        if tag:
+            return super().get_queryset().filter(tags__id=tag)
+        return super().get_queryset()
+
+    def get_context_data(self, **kwargs: Any) -> Dict[str, Any]:
+        data = super().get_context_data(**kwargs)
+        data["Tags"] = Tag.objects.all()
+        return data
 
 
 class ArticleDetailView(DetailView):

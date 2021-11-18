@@ -7,8 +7,12 @@ from shared.models import BaseModel
 
 
 class Tag(BaseModel):
+    class Meta:
+        ordering = ["ordering"]
+
     name = models.CharField("タグ", max_length=32)
     color = ColorField(default="#6c757d")
+    ordering = models.IntegerField("並び順", default=9999)
 
     def __str__(self) -> str:
         return self.name

@@ -12,8 +12,8 @@ class ArticleAdmin(admin.ModelAdmin):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    list_display = ["name", "color"]
-    list_editable = ["color"]
+    list_display = ["name", "ordering", "color"]
+    list_editable = ["ordering", "color"]
 
 
 @admin.register(Comment)

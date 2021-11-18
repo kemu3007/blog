@@ -148,3 +148,5 @@ SECURE_HSTS_SECONDS = 31536000
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 CSRF_TRUSTED_ORIGINS = ["kemu.site"]
+LOGIN_URL = "admin/native/login/"  # ログイン
+LOGOUT_URL = "admin/native/logout/"  # ログアウト
