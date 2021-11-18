@@ -28,6 +28,7 @@ class TagType(DjangoObjectType):
 class CommentType(DjangoObjectType):
     class Meta:
         model = Comment
+        exclude = ["ip_address"]
 
 
 class Query(graphene.ObjectType):
