@@ -4,6 +4,7 @@ from django import forms
 from graphene_django import DjangoObjectType
 from graphene_django.forms.mutation import DjangoModelFormMutation
 from graphql import GraphQLError
+from mdx_gfm import GithubFlavoredMarkdownExtension
 
 from .models import Article, Comment, Tag
 
@@ -11,11 +12,12 @@ from .models import Article, Comment, Tag
 class ArticleType(DjangoObjectType):
     class Meta:
         model = Article
+        exclude = ["last_viewer"]
 
     html = graphene.NonNull(graphene.String)
 
     def resolve_html(self, info) -> str:
-        return markdown.markdown(self.contents)
+        return markdown.markdown(self.contents, extensions=[GithubFlavoredMarkdownExtension()])
 
 
 class TagType(DjangoObjectType):
