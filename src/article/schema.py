@@ -55,7 +55,7 @@ class AddComment(DjangoModelFormMutation):
 
     @classmethod
     def perform_mutate(cls, form, info):
-        if ip_address := info.context.META["REMOTE_ADDR"]:
+        if ip_address := info.context.META.get("HTTP_X_FORWARDED_FOR"):
             form.instance.ip_address = ip_address
         else:
             raise GraphQLError("IPアドレスが参照できません")

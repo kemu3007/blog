@@ -90,7 +90,7 @@ function addComment() {
   }).then(() => {
     window.location.hash = "#comment"
     window.location.reload()
-  })
+  }).catch(error => alert(error))
 }
 </script>
 {% endblock %}
