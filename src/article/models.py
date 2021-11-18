@@ -20,6 +20,8 @@ class Article(BaseModel):
     contents = models.TextField("記事")
     is_active = models.BooleanField("有効フラグ", default=True)
     tags = models.ManyToManyField("article.Tag", related_name="ref_articles", verbose_name="タグ", blank=True)
+    view_count = models.PositiveIntegerField("アクセス数", default=0, editable=False)
+    last_viewer = models.GenericIPAddressField("IPアドレス", null=True, blank=True, editable=False)
 
     def __str__(self) -> str:
         return self.title

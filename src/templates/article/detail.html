@@ -87,9 +87,12 @@ function addComment() {
       query: addCommentQuery,
       variables: comment,
     })
-  }).then(() => {
-    window.location.hash = "#comment"
-    window.location.reload()
+  }).then((res) => {
+    res.json().then(data => {
+      if ("errors" in data) {
+        alert(data.errors.map(error => error.message))
+      }
+    })
   }).catch(error => alert(error))
 }
 </script>

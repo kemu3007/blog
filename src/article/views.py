@@ -25,6 +25,15 @@ class ArticleDetailView(DetailView):
             return redirect("article_list")
         return super().dispatch(request, *args, **kwargs)
 
+    def get(self, request, *args, **kwargs):
+        response = super().get(request, *args, **kwargs)
+        print(request.META.get("HTTP_X_FORWARDED_FOR"))
+        if self.object.last_viewer != request.META.get("HTTP_X_FORWARDED_FOR"):
+            self.object.last_viewer = request.META.get("HTTP_X_FORWARDED_FOR")
+            self.object.view_count += 1
+            self.object.save()
+        return response
+
     def get_object(self, queryset=None) -> Article:
         return get_object_or_404(self.queryset, uuid=self.kwargs["uuid"])
 
