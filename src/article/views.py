@@ -1,17 +1,20 @@
 from typing import Any, Dict
 
 import markdown
+from django.db.models.query import Prefetch
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import DetailView, ListView
 from mdx_gfm import GithubFlavoredMarkdownExtension
 
 from shared.utils import is_uuid
 
-from .models import Article
+from .models import Article, Comment
 
 
 class ArticleListView(ListView):
-    queryset = Article.objects.filter(is_active=True)
+    queryset = Article.objects.filter(is_active=True).prefetch_related(
+        Prefetch("ref_comments", Comment.objects.filter(is_active=True))
+    )
     template_name = "article/list.html"
     ordering = "-id"
 
@@ -42,4 +45,5 @@ class ArticleDetailView(DetailView):
         context_data["markdown_contents"] = markdown.markdown(
             self.object.contents, extensions=[GithubFlavoredMarkdownExtension()]
         )
+        context_data["comments"] = self.object.ref_comments.filter(is_active=True)
         return context_data

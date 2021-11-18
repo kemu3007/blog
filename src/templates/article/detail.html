@@ -4,12 +4,13 @@
 <h2>
   {{ article.title }}
 </h2>
+<i class="bi bi-eye"></i>&nbsp;{{ article.view_count }}&nbsp;<i class="bi bi-chat-left"></i>&nbsp;{{ article.ref_comments.count }}
 <div class="d-flex justify-content-between">
   <p>
     作成日: {{ article.created_at | date }}
   </p>
   <p>
-    最終更新日: {{ article.updated_at | date }}
+    更新日: {{ article.updated_at | date }}
   </p>
 </div>
 <div class="markdown-body">
@@ -17,7 +18,7 @@
 </div>
 <div class="mt-4">
   <h3 #comment>Comments</h2>
-  {% for comment in article.ref_comments.all %}
+  {% for comment in comments %}
   <div class="card">
     <div class="card-body text-secondary">
       <div class="d-flex justify-content-between">
