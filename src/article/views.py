@@ -30,7 +30,6 @@ class ArticleDetailView(DetailView):
 
     def get(self, request, *args, **kwargs):
         response = super().get(request, *args, **kwargs)
-        print(request.META.get("HTTP_X_FORWARDED_FOR"))
         if self.object.last_viewer != request.META.get("HTTP_X_FORWARDED_FOR"):
             self.object.last_viewer = request.META.get("HTTP_X_FORWARDED_FOR")
             self.object.view_count += 1
