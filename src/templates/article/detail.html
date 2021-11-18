@@ -91,6 +91,9 @@ function addComment() {
     res.json().then(data => {
       if ("errors" in data) {
         alert(data.errors.map(error => error.message))
+      } else {
+        window.location.hash = "#comment"
+        window.location.reload()
       }
     })
   }).catch(error => alert(error))
