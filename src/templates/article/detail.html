@@ -87,9 +87,10 @@ function addComment() {
       query: addCommentQuery,
       variables: comment,
     })
+  }).then(() => {
+    window.location.hash = "#comment"
+    window.location.reload()
   })
-  window.location.hash = "#comment"
-  window.location.reload()
 }
 </script>
 {% endblock %}
