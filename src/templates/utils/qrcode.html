@@ -1,22 +1,48 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
+<h3>QRコードジェネレータ</h3>
+<p>文字列をQRコードに変換します。変換した履歴はローカルストレージにのみ保存され、サーバーには保存されません</p>
+
 <label for="qrcodeString" class="form-label">変換するテキスト</label>
 <input id="qrcodeString" class="form-control" onblur="generateQRcode()" />
 <div class="my-4 d-flex justify-content-center">
     <div id="qrcode"></div>
 </div>
+履歴
+<div class="list-group" id="history"></div>
 <script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"></script>
 <script type="text/javascript">
 const defaultQrcodeString = localStorage.getItem("qrcodeString")
+const convertHistory = JSON.parse(localStorage.getItem("convertHistory") || "[]")
 qrcode = new QRCode(document.getElementById("qrcode"), defaultQrcodeString)
 document.getElementById("qrcodeString").value = defaultQrcodeString
+displayHistory()
+
 function generateQRcode() {
     const qrcodeString = document.getElementById("qrcodeString").value
+    convertHistory.push(qrcodeString)
     if (qrcodeString) {
         qrcode.makeCode(qrcodeString)
     }
     localStorage.setItem("qrcodeString", qrcodeString)
+    displayHistory()
+}
+
+function displayHistory() {
+    const historyDom = document.getElementById("history")
+    historyDom.innerHTML = ""
+    convertHistory.slice().reverse().forEach(qrcodeString => {
+        var li = document.createElement("button");
+        li.setAttribute("class", "list-group-item list-group-item-action")
+        li.textContent = qrcodeString;
+        li.onclick = () => {
+            document.getElementById("qrcodeString").value = qrcodeString
+            generateQRcode()
+        }
+        historyDom.appendChild(li);
+    })
+    localStorage.setItem("convertHistory", JSON.stringify(convertHistory.slice(-5)))
 }
 </script>
 {% endblock %}
