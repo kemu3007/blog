@@ -47,9 +47,6 @@ class CommentForm(forms.ModelForm):
         model = Comment
         fields = ("article", "name", "contents")
 
-    def save(self, commit: bool = True):
-        return super().save(commit=commit)
-
 
 class AddComment(DjangoModelFormMutation):
     class Meta:
