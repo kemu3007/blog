@@ -1,0 +1,10 @@
+.no-deco {
+    text-decoration: none;
+}
+.page-navi {
+    font-size: 24px
+}
+.event-disabled {
+    pointer-events: none;
+    color: grey;
+}

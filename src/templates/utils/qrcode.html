@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<label for="qrcodeString" class="form-label">変換するテキスト</label>
+<input id="qrcodeString" class="form-control" onblur="generateQRcode()" />
+<div class="my-4 d-flex justify-content-center">
+    <div id="qrcode"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/davidshimjs-qrcodejs@0.0.2/qrcode.min.js"></script>
+<script type="text/javascript">
+const defaultQrcodeString = localStorage.getItem("qrcodeString")
+qrcode = new QRCode(document.getElementById("qrcode"), defaultQrcodeString)
+document.getElementById("qrcodeString").value = defaultQrcodeString
+function generateQRcode() {
+    const qrcodeString = document.getElementById("qrcodeString").value
+    if (qrcodeString) {
+        qrcode.makeCode(qrcodeString)
+    }
+    localStorage.setItem("qrcodeString", qrcodeString)
+}
+</script>
+{% endblock %}

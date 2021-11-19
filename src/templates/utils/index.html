@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<a class="card mt-2 no-deco" href="{% url 'utils_qrcode' %}">
+  <div class="card-body text-secondary">
+    <div class="card-title d-flex justify-content-between">
+      QRコードジェネレータ
+    </div>
+  </div>
+</a>
+{% endblock %}

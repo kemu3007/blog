@@ -34,16 +34,4 @@
     {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
     <a class="bi bi-chevron-right page-navi {% if not page_obj.has_next %}event-disabled{% endif %}" href="?page={{ page_obj.number | add:1 }}"></a>
   </div>
-  <style>
-    .no-deco {
-      text-decoration: none;
-    }
-    .page-navi {
-      font-size: 24px
-    }
-    .event-disabled {
-      pointer-events: none;
-      color: grey;
-    }
-  </style>
 {% endblock %}

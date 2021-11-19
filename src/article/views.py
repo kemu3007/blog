@@ -15,7 +15,7 @@ class ArticleListView(ListView):
     queryset = Article.objects.filter(is_active=True).prefetch_related(
         Prefetch("ref_comments", Comment.objects.filter(is_active=True))
     )
-    template_name = "article/list.html"
+    template_name = "article/index.html"
     ordering = "-id"
     paginate_by = 10
 
