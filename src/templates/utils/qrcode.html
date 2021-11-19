@@ -21,7 +21,9 @@ displayHistory()
 
 function generateQRcode() {
     const qrcodeString = document.getElementById("qrcodeString").value
-    convertHistory.push(qrcodeString)
+    if (localStorage.getItem("qrcodeString") !== qrcodeString) {
+        convertHistory.push(qrcodeString)
+    }
     if (qrcodeString) {
         qrcode.makeCode(qrcodeString)
     }
