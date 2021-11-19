@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Markdown Editor</h2>
+<div class="row border-top border-bottom" style="height: 80%;">
+    <div class="col-6">
+        <div class="d-flex flex-row-reverse" >
+            <button class="btn btn-sm btn-outline-primary" style="position: absolute;" onclick="copyText()"><i class="bi bi-clipboard"></i></button>
+        </div>
+        <textarea 
+            oninput="syncHtml()" 
+            onkeydown="markdownComplement(event, this)" 
+            style="height: 100%; tab-size: 4;" 
+            class="form-control" 
+            id="markdown"></textarea>
+    </div>
+    <div class="col-6" id="output"></div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script type="text/javascript">
+document.getElementById("markdown").value = localStorage.getItem("markdown")
+syncHtml()
+function syncHtml() {
+    const markdown = document.getElementById("markdown").value
+    document.getElementById("output").innerHTML = marked.parse(markdown)
+    localStorage.setItem("markdown", markdown)
+}
+function markdownComplement(event, object) {
+    // キーコードと入力された文字列
+    var keyCode = event.keyCode;
+    var keyVal = event.key;
+    // カーソル位置
+    var cursorPosition = object.selectionStart;
+    var leftString = object.value.substr(0, cursorPosition);
+    var rightString = object.value.substr(cursorPosition, object.value.length);
+
+    // タブキーの場合
+    if(keyCode === 9) {
+        event.preventDefault();
+        object.value = leftString + "\t" + rightString;
+        object.selectionEnd = cursorPosition + 1;
+    }
+}
+function copyText() {
+    window.navigator.clipboard.writeText(document.getElementById("markdown").value)
+}
+</script>
+{% endblock %}

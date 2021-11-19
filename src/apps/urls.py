@@ -12,6 +12,7 @@ urlpatterns = [
     path("contact/", contact_views.ContactView.as_view(), name="contact"),
     path("utils/", utils_views.UtilListView.as_view(), name="utils_list"),
     path("utils/qrcode/", utils_views.QRCodeGeneratorView.as_view(), name="utils_qrcode"),
+    path("utils/markdown/", utils_views.MarkdownEditorView.as_view(), name="utils_markdown"),
     path("<str:uuid>/", article_views.ArticleDetailView.as_view(), name="article_detail"),
     path("api/v1/graphql/", GraphQLView.as_view(graphiql=True)),
 ]
