@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block header %}
+<title>kemuのブログ | QRコードジェネレータ</title>
+<meta name="og:title" content="kemuのブログ | QRコードジェネレータ" >
+{% endblock %}
 {% block content %}
 <h3>QRコードジェネレータ</h3>
 <p>文字列をQRコードに変換します。変換した履歴はローカルストレージにのみ保存され、サーバーには保存されません</p>

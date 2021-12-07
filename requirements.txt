@@ -1,4 +1,4 @@
-Django
+Django<3.3
 markdown
 uwsgi
 graphene_django
