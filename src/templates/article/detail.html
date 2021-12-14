@@ -6,7 +6,7 @@
 <meta property="og:description" content="{{ article.contents |truncatechars:90 }}" >
 {% endblock %}
 {% block content %}
-<h2>{{ article.title }</h2>
+<h2>{{ article.title }}</h2>
 <i class="bi bi-eye"></i>&nbsp;{{ article.view_count }}&nbsp;<i class="bi bi-chat-left"></i>&nbsp;{{ article.ref_comments.count }}
 <div class="d-flex justify-content-between">
   <p>作成日: {{ article.created_at | date }}</p>
