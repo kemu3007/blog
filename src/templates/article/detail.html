@@ -9,8 +9,8 @@
 <h2>{{ article.title }}</h2>
 <i class="bi bi-eye"></i>&nbsp;{{ article.view_count }}&nbsp;<i class="bi bi-chat-left"></i>&nbsp;{{ article.ref_comments.count }}
 <div class="d-flex justify-content-between">
-  <p>作成日: {{ article.created_at | date }}</p>
-  <p>更新日: {{ article.updated_at | date }}</p>
+  <p>作成日: {{ article.created_at | date }} / 更新日: {{ article.updated_at | date }}</p>
+  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div>
 <div class="markdown-body">
   {{ markdown_contents | safe }}
