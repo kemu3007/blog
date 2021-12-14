@@ -3,6 +3,7 @@
 {% block header %}
 <title>kemuのブログ | {{ article.title }}</title>
 <meta property="og:title" content="kemuのブログ | {{ article.title }}" >
+<meta property="og:description" content="{{ article.contents |truncatechars:90 }}" >
 {% endblock %}
 {% block content %}
 <h2>

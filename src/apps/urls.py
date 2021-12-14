@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path
 from graphene_django.views import GraphQLView
@@ -6,11 +5,12 @@ from graphene_django.views import GraphQLView
 import article.views as article_views
 import contact.views as contact_views
 import utils.views as utils_views
+from apps.admin import AutoGenerateAdminSite
 
 from .sites import ArticleRssFeed, sitemaps
 
 urlpatterns = [
-    path("admin/native/", admin.site.urls),
+    path("admin/native/", AutoGenerateAdminSite().urls),
     path("sitemap.xml/", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     path("rss/", ArticleRssFeed(), name="rss"),
     path("", article_views.ArticleListView.as_view(), name="article_list"),
