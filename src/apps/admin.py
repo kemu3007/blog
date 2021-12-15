@@ -14,6 +14,7 @@ def get_admin_model(model: Type[models.Model]) -> Type[ModelAdmin]:
         models.PositiveIntegerField,
         models.ForeignKey,
         models.BooleanField,
+        models.GenericIPAddressField,
         ColorField,
     ]
     list_editable_field = [models.IntegerField, models.PositiveIntegerField, models.BooleanField, ColorField]
