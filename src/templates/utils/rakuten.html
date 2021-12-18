@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block header %}
+<title>kemuのブログ | 楽天カード履歴変換</title>
+<meta property="og:title" content="kemuのブログ | QRコードジェネレータ" >
+{% endblock %}
+{% block content %}
+<form method="POST" enctype="multipart/form-data">{% csrf_token %}
+    <label for="formFile" class="form-label">PDF</label>
+    <input class="form-control" type="file" name="pdf" required id="id_pdf">
+    <div class="mt-3">
+        <button type="submit" class="btn btn-success">変換</button>
+    </div>
+</form>
+{% endblock %}

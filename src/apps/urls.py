@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path
 from graphene_django.views import GraphQLView
@@ -18,6 +19,8 @@ urlpatterns = [
     path("utils/", utils_views.UtilListView.as_view(), name="utils_list"),
     path("utils/qrcode/", utils_views.QRCodeGeneratorView.as_view(), name="utils_qrcode"),
     path("utils/markdown/", utils_views.MarkdownEditorView.as_view(), name="utils_markdown"),
+    path("utils/rakuten/", login_required(utils_views.RakutenConverterView.as_view()), name="utils_rakuten"),
+    path("utils/csv_to_md/", utils_views.CSVTOMDConvertorView.as_view(), name="utils_csv_to_md"),
     path("<str:uuid>/", article_views.ArticleDetailView.as_view(), name="article_detail"),
     path("api/v1/graphql/", GraphQLView.as_view(graphiql=True)),
 ]
