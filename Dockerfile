@@ -3,4 +3,6 @@ FROM python:3.10
 ADD . /app
 WORKDIR /app
 
+RUN apt update && apt install default-jre -y && rm -rf /var/lib/apt/lists/*
+
 RUN pip install -r requirements.txt
