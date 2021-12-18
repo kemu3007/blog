@@ -6,18 +6,32 @@
 {% endblock %}
 {% block content %}
 <h2>便利ツール集</h2>
-<a class="card mt-2 no-deco" href="{% url 'utils_qrcode' %}">
-  <div class="card-body text-secondary">
+<button class="card w-100 mt-2 no-deco" onclick="window.location.href='{% url "utils_qrcode" %}'">
+  <div class="card-body w-100 text-secondary">
     <div class="card-title d-flex justify-content-between">
       QRコードジェネレータ
     </div>
   </div>
-</a>
-<a class="card mt-2 no-deco" href="{% url 'utils_markdown' %}">
-  <div class="card-body text-secondary">
+</button>
+<button class="card w-100 mt-2 no-deco" onclick="window.location.href='{% url "utils_markdown" %}'">
+  <div class="card-body w-100 text-secondary">
     <div class="card-title d-flex justify-content-between">
       Markdown Editor
     </div>
   </div>
-</a>
+</button>
+<button class="card w-100 mt-2 no-deco" onclick="window.location.href='{% url "utils_csv_to_md" %}'">
+  <div class="card-body w-100 text-secondary">
+    <div class="card-title d-flex justify-content-between">
+      CSV to MD table
+    </div>
+  </div>
+</button>
+<button class="card w-100 mt-2 no-deco" onclick="window.location.href='{% url "utils_rakuten" %}'" {% if not user.is_authenticated %} disabled {% endif %}>
+  <div class="card-body w-100 text-secondary">
+    <div class="card-title d-flex justify-content-between">
+      楽天カード履歴変換<i class="bi bi-lock"></i>
+    </div>
+  </div>
+</button>
 {% endblock %}
