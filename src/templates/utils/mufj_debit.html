@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 
 {% block header %}
-<title>kemuのブログ | 楽天カード履歴変換</title>
-<meta property="og:title" content="kemuのブログ | 楽天カード履歴変換" >
+<title>kemuのブログ | MUFJ Debit履歴変換</title>
+<meta property="og:title" content="kemuのブログ | MUFJ Debit履歴変換" >
 {% endblock %}
 {% block content %}
-<h2>楽天カード履歴変換</h2>
+<h2>MUFJ Debit履歴変換</h2>
 <form method="POST" enctype="multipart/form-data">{% csrf_token %}
     <label for="formFile" class="form-label">PDF</label>
     <input class="form-control" type="file" name="pdf" required id="id_pdf">

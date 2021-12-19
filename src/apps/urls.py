@@ -20,6 +20,7 @@ urlpatterns = [
     path("utils/qrcode/", utils_views.QRCodeGeneratorView.as_view(), name="utils_qrcode"),
     path("utils/markdown/", utils_views.MarkdownEditorView.as_view(), name="utils_markdown"),
     path("utils/rakuten/", login_required(utils_views.RakutenConverterView.as_view()), name="utils_rakuten"),
+    path("utils/mufj_debit/", login_required(utils_views.MUFJDebitConverterView.as_view()), name="utils_mufj_debit"),
     path("utils/csv_to_md/", utils_views.CSVTOMDConvertorView.as_view(), name="utils_csv_to_md"),
     path("<str:uuid>/", article_views.ArticleDetailView.as_view(), name="article_detail"),
     path("api/v1/graphql/", GraphQLView.as_view(graphiql=True)),

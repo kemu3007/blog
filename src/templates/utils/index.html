@@ -34,4 +34,11 @@
     </div>
   </div>
 </button>
+<button class="card w-100 mt-2 no-deco" onclick="window.location.href='{% url "utils_mufj_debit" %}'" {% if not user.is_authenticated %} disabled {% endif %}>
+  <div class="card-body w-100 text-secondary">
+    <div class="card-title d-flex justify-content-between">
+      MUFJ Debit履歴変換<i class="bi bi-lock"></i>
+    </div>
+  </div>
+</button>
 {% endblock %}
