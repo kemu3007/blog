@@ -5,6 +5,7 @@ from django.contrib.sitemaps.views import sitemap
 from django.urls import path
 from graphene_django.views import GraphQLView
 
+import apps.views as apps_views
 import article.views as article_views
 import contact.views as contact_views
 import utils.views as utils_views
@@ -15,6 +16,7 @@ from .sites import ArticleRssFeed, sitemaps
 urlpatterns = (
     [
         path("admin/native/", AutoGenerateAdminSite().urls),
+        path("profile/", apps_views.ProfileView.as_view(), name="profile"),
         path("sitemap.xml/", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
         path("rss/", ArticleRssFeed(), name="rss"),
         path("", article_views.ArticleListView.as_view(), name="article_list"),

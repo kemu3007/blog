@@ -6,6 +6,7 @@
 {% endblock %}
 {% block content %}
 <h2>便利ツール集</h2>
+<p>鍵マークの記載してある機能は有料機能になるため<a href="{% url 'contact' %}">Contact</a>より問い合わせを行ってください。</p>
 <button class="card w-100 mt-2 no-deco" onclick="window.location.href='{% url "utils_qrcode" %}'">
   <div class="card-body w-100 text-secondary">
     <div class="card-title d-flex justify-content-between">
