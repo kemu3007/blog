@@ -143,3 +143,5 @@ src/static/colorfield
 src/static/graphene_django
 src/static/admin
 .env_release
+
+media/

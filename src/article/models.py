@@ -41,3 +41,12 @@ class Comment(BaseModel):
 
     def __str__(self) -> str:
         return self.contents
+
+
+class Photo(BaseModel):
+    title = models.CharField(max_length=255)
+    image = models.ImageField()
+    take_at = models.DateField("撮影日")
+
+    def __str__(self) -> str:
+        return self.title
