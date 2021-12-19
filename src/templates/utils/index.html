@@ -11,6 +11,7 @@
     <div class="card-title d-flex justify-content-between">
       QRコードジェネレータ
     </div>
+    <p class="card-text text-start">任意の文字列をQRコードに変換します。</p>
   </div>
 </button>
 <button class="card w-100 mt-2 no-deco" onclick="window.location.href='{% url "utils_markdown" %}'">
@@ -18,6 +19,7 @@
     <div class="card-title d-flex justify-content-between">
       Markdown Editor
     </div>
+    <p class="card-text text-start">markdown記法で書かれた文字列をHTMLで表示します。</p>
   </div>
 </button>
 <button class="card w-100 mt-2 no-deco" onclick="window.location.href='{% url "utils_csv_to_md" %}'">
@@ -25,6 +27,7 @@
     <div class="card-title d-flex justify-content-between">
       CSV to MD table
     </div>
+    <p class="card-text text-start">コンマ区切りで入力されたcsvをMarkdownテーブル形式に変換します。</p>
   </div>
 </button>
 <button class="card w-100 mt-2 no-deco" onclick="window.location.href='{% url "utils_rakuten" %}'" {% if not user.is_authenticated %} disabled {% endif %}>
@@ -32,6 +35,7 @@
     <div class="card-title d-flex justify-content-between">
       楽天カード履歴変換<i class="bi bi-lock"></i>
     </div>
+    <p class="card-text text-start">楽天カードの利用履歴PDFからデータを抽出し、csvに変換します。</p>
   </div>
 </button>
 <button class="card w-100 mt-2 no-deco" onclick="window.location.href='{% url "utils_mufj_debit" %}'" {% if not user.is_authenticated %} disabled {% endif %}>
@@ -39,6 +43,7 @@
     <div class="card-title d-flex justify-content-between">
       MUFJ Debit履歴変換<i class="bi bi-lock"></i>
     </div>
+    <p class="card-text text-start">MUFJ Debitカードの利用履歴PDFからデータを抽出し、csvに変換します。</p>
   </div>
 </button>
 {% endblock %}
