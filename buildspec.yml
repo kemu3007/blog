@@ -1,0 +1,14 @@
+version: 0.2
+
+phases:
+  build:
+    commands:
+      - docker build -t kemu-site . --file dockerfiles/Dockerfile-web
+      - docker build -t kemu-site-nginx . --file dockerfiles/Dockerfile-nginx
+  post_build:
+    commands:
+      - aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin 535811171857.dkr.ecr.ap-northeast-1.amazonaws.com
+      - docker tag kemu-site:latest 535811171857.dkr.ecr.ap-northeast-1.amazonaws.com/kemu-site:latest
+      - docker push 535811171857.dkr.ecr.ap-northeast-1.amazonaws.com/kemu-site:latest
+      - docker tag kemu-site-nginx:latest 535811171857.dkr.ecr.ap-northeast-1.amazonaws.com/kemu-site-nginx:latest
+      - docker push 535811171857.dkr.ecr.ap-northeast-1.amazonaws.com/kemu-site-nginx:latest
