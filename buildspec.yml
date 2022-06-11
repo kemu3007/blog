@@ -10,7 +10,9 @@ phases:
       - docker build -t kemu-site-nginx . --file dockerfiles/Dockerfile-nginx
   post_build:
     commands:
-      - docker tag kemu-site:latest 535811171857.dkr.ecr.ap-northeast-1.amazonaws.com/kemu-site:latest
-      - docker push 535811171857.dkr.ecr.ap-northeast-1.amazonaws.com/kemu-site:latest
-      - docker tag kemu-site-nginx:latest 535811171857.dkr.ecr.ap-northeast-1.amazonaws.com/kemu-site-nginx:latest
-      - docker push 535811171857.dkr.ecr.ap-northeast-1.amazonaws.com/kemu-site-nginx:latest
+      - docker tag kemu-site 535811171857.dkr.ecr.ap-northeast-1.amazonaws.com/kemu-site:latest
+      - docker tag kemu-site 535811171857.dkr.ecr.ap-northeast-1.amazonaws.com/kemu-site:{git rev-parse --short HEAD}
+      - docker tag kemu-site-nginx 535811171857.dkr.ecr.ap-northeast-1.amazonaws.com/kemu-site-nginx:latest
+      - docker tag kemu-site-nginx 535811171857.dkr.ecr.ap-northeast-1.amazonaws.com/kemu-site-nginx:{git rev-parse --short HEAD}
+      - docker push -a 535811171857.dkr.ecr.ap-northeast-1.amazonaws.com/kemu-site
+      - docker push -a 535811171857.dkr.ecr.ap-northeast-1.amazonaws.com/kemu-site-nginx
